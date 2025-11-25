@@ -21,7 +21,7 @@
       <h1 class="text-center mb-4">
         Grades
         <p
-          class="fw-bold {% if grades_avr['all_avr']  < 5 %} text-danger {% elif grades_avr['all_avr']  >= 5 and grades_avr['all_avr']  < 6 %} text-warning {% else %} text-success {% endif %}"
+          class="fw-bold {% if grades_avr['all_avr'] < 5 %} text-danger {% elif grades_avr['all_avr'] >= 5 and grades_avr['all_avr'] < 6 %} text-warning {% else %} text-success {% endif %}"
         >
           {{ grades_avr["all_avr"] | round(1) }}
         </p>
@@ -70,7 +70,20 @@
                 </button>
                 {% endfor %}
               </td>
-              <td class="fw-bold text-center">{{ (data.avr) | round(1) }}</td>
+              <td class="fw-bold text-center">
+                <div class="d-flex gap-2 justify-content-center flex-wrap">
+                  <span
+                    class="badge bg-{% if data.avr < 5 %}danger{% elif data.avr >= 5 and data.avr < 6 %}warning text-dark{% else %}success{% endif %} fs-6 py-2 px-3"
+                  >
+                    {{ (data.avr) | round(1) }}
+                  </span>
+                  {% if data.needed_for_6 is not none %}
+                  <span class="badge bg-info fs-6 py-2 px-3">
+                    Need: {{ data.needed_for_6 | round(1) }}
+                  </span>
+                  {% endif %}
+                </div>
+              </td>
             </tr>
             {% endif %} {% endfor %}
           </tbody>
@@ -121,15 +134,19 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
       // JavaScript to populate modal with grade details
-      const gradeModal = document.getElementById('gradeModal');
-      gradeModal.addEventListener('show.bs.modal', (event) => {
+      const gradeModal = document.getElementById("gradeModal");
+      gradeModal.addEventListener("show.bs.modal", (event) => {
         const button = event.relatedTarget;
-        const gradeData = JSON.parse(button.getAttribute('data-grade'));
-        document.getElementById('modalGrade').textContent = gradeData.decimalValue;
-        document.getElementById('modalDate').textContent = gradeData.evtDate;
-        document.getElementById('modalComponent').textContent = gradeData.componentDesc;
-        document.getElementById('modalTeacher').textContent = gradeData.teacherName;
-        document.getElementById('modalNotes').textContent = gradeData.notesForFamily || 'No notes';
+        const gradeData = JSON.parse(button.getAttribute("data-grade"));
+        document.getElementById("modalGrade").textContent =
+          gradeData.decimalValue;
+        document.getElementById("modalDate").textContent = gradeData.evtDate;
+        document.getElementById("modalComponent").textContent =
+          gradeData.componentDesc;
+        document.getElementById("modalTeacher").textContent =
+          gradeData.teacherName;
+        document.getElementById("modalNotes").textContent =
+          gradeData.notesForFamily || "No notes";
       });
     </script>
   </body>

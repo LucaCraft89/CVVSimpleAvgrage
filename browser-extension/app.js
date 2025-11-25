@@ -107,10 +107,25 @@ function calculateAverages(grades) {
       const subjectGrades = gradesAvr[period][subject].grades.map(
         (g) => g.decimalValue
       );
-      gradesAvr[period][subject].avr =
+      const average =
         subjectGrades.length > 0
           ? subjectGrades.reduce((a, b) => a + b, 0) / subjectGrades.length
           : 0;
+
+      gradesAvr[period][subject].avr = average;
+
+      // Calculate minimum grade needed to reach 6.0
+      if (average < 6.0 && subjectGrades.length > 0) {
+        const currentSum = subjectGrades.reduce((a, b) => a + b, 0);
+        const targetSum = 6.0 * (subjectGrades.length + 1);
+        const neededGrade = targetSum - currentSum;
+        gradesAvr[period][subject].neededFor6 = Math.max(
+          0,
+          Math.min(10, neededGrade)
+        );
+      } else {
+        gradesAvr[period][subject].neededFor6 = null;
+      }
     }
   }
 
@@ -201,13 +216,25 @@ function displayGrades(gradesAvr) {
         gradesCell.appendChild(badge);
       });
 
+      const avgContainer = document.createElement("div");
+      avgContainer.className = "average-container";
+
       const avgCell = document.createElement("div");
       avgCell.className = `subject-average text-${getColorClass(data.avr)}`;
       avgCell.textContent = data.avr.toFixed(1);
+      avgContainer.appendChild(avgCell);
+
+      // Add needed grade indicator if average < 6.0
+      if (data.neededFor6 !== null) {
+        const neededSpan = document.createElement("div");
+        neededSpan.className = "needed-grade";
+        neededSpan.textContent = `Need: ${data.neededFor6.toFixed(1)}`;
+        avgContainer.appendChild(neededSpan);
+      }
 
       row.appendChild(subjectCell);
       row.appendChild(gradesCell);
-      row.appendChild(avgCell);
+      row.appendChild(avgContainer);
       periodSection.appendChild(row);
     }
 

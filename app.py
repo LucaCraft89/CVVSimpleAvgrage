@@ -100,7 +100,17 @@ def calculate_avr(grades):
     for period in grades_avr:
         for subject in grades_avr[period]:
             subject_grades = [g['decimalValue'] for g in grades_avr[period][subject]['grades']]
-            grades_avr[period][subject]["avr"] = sum(subject_grades) / len(subject_grades) if subject_grades else 0
+            average = sum(subject_grades) / len(subject_grades) if subject_grades else 0
+            grades_avr[period][subject]["avr"] = average
+            
+            # Calculate minimum grade needed to reach 6.0
+            if average < 6.0 and len(subject_grades) > 0:
+                current_sum = sum(subject_grades)
+                target_sum = 6.0 * (len(subject_grades) + 1)
+                needed_grade = target_sum - current_sum
+                grades_avr[period][subject]["needed_for_6"] = max(0, min(10, needed_grade))
+            else:
+                grades_avr[period][subject]["needed_for_6"] = None
     
     # Calculate period averages
     for period in grades_avr:

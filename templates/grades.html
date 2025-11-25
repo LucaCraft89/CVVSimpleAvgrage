@@ -1,153 +1,385 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
-    />
-    <title>Grades</title>
+    <title>CVV Average Calculator - Grades</title>
     <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
       body {
-        overflow-x: auto;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 10px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .header {
+        text-align: center;
+        color: white;
+        margin-bottom: 20px;
+      }
+
+      .header h1 {
+        font-size: 24px;
+        margin-bottom: 5px;
+      }
+
+      .header p {
+        font-size: 12px;
+        opacity: 0.9;
+      }
+
+      .card {
+        background: white;
+        border-radius: 12px;
+        padding: 15px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        margin-bottom: 15px;
+      }
+
+      h2 {
+        margin-bottom: 15px;
+        color: #333;
+        font-size: 20px;
+      }
+
+      .overall-average {
+        text-align: center;
+        font-size: 48px;
+        font-weight: bold;
+        margin: 20px 0;
+      }
+
+      .text-success { color: #28a745; }
+      .text-warning { color: #ffc107; }
+      .text-danger { color: #dc3545; }
+
+      .period-section {
+        margin-bottom: 15px;
+        background: white;
+        border-radius: 12px;
+        padding: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      }
+
+      .period-title {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 8px;
+        color: #333;
+      }
+
+      .period-average {
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+
+      .subject-row {
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        background: white;
+        border: 2px solid #e0e0e0;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+        transition: border-color 0.3s, box-shadow 0.3s;
+      }
+
+      .subject-row:hover {
+        border-color: #667eea;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+      }
+
+      .subject-name {
+        font-weight: 600;
+        font-size: 14px;
+        color: #333;
+        margin-bottom: 5px;
+      }
+
+      .grades {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .grade-badge {
+        display: inline-block;
+        padding: 6px 10px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 13px;
+        color: white;
+        cursor: pointer;
+        transition: transform 0.2s;
+        border: none;
+      }
+
+      .grade-badge:hover {
+        transform: scale(1.1);
+      }
+
+      .bg-success { background-color: #28a745; }
+      .bg-warning { background-color: #ffc107; color: #000; }
+      .bg-danger { background-color: #dc3545; }
+
+      .average-container {
+        display: flex;
+        gap: 8px;
+        align-items: stretch;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .average-container > * {
+        flex: 1 1 auto;
+        min-width: 100px;
+      }
+
+      @media (max-width: 480px) {
+        .average-container > * {
+          flex: 1 1 100%;
+        }
+      }
+
+      .subject-average {
+        font-weight: bold;
+        font-size: 18px;
+        text-align: center;
+        padding: 12px 15px;
+        border-radius: 8px;
+        color: white;
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+      }
+
+      .needed-grade {
+        font-size: 18px;
+        padding: 12px 15px;
+        border-radius: 8px;
+        background-color: #17a2b8;
+        color: white;
+        font-weight: bold;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        margin-top: 5px;
+      }
+
+      .subject-average.bg-success { background-color: #28a745; }
+      .subject-average.bg-warning { background-color: #ffc107; color: #333; }
+      .subject-average.bg-danger { background-color: #dc3545; }
+
+      .logout-btn {
+        max-width: 200px;
+        margin: 0 auto 30px;
+        display: block;
+        padding: 12px;
+        background: #6c757d;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        text-decoration: none;
+        text-align: center;
+      }
+
+      .logout-btn:hover {
+        background: #5a6268;
+        color: white;
+        text-decoration: none;
+      }
+
+      /* Modal styles */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .modal.show {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-content {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        max-width: 500px;
+        width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      }
+      
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+      
+      .modal-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .close-btn {
+        background: none !important;
+        border: none !important;
+        font-size: 32px;
+        cursor: pointer;
+        color: #999;
+        padding: 0 !important;
+        width: auto !important;
+        min-width: auto !important;
+        line-height: 1;
+      }
+
+      .close-btn:hover {
+        color: #333 !important;
+        transform: none !important;
+        box-shadow: none !important;
+      }
+
+      .modal-body {
+        color: #555;
+      }
+
+      .modal-body p {
+        margin-bottom: 10px;
+        line-height: 1.5;
+        font-size: 14px;
+      }
+
+      .modal-body strong {
+        color: #333;
+        display: inline-block;
+        min-width: 100px;
+        font-size: 14px;
       }
     </style>
-  </head>
-  <body>
-    <div class="container my-3">
-      <h1 class="text-center mb-4">
-        Grades
-        <p
-          class="fw-bold {% if grades_avr['all_avr'] < 5 %} text-danger {% elif grades_avr['all_avr'] >= 5 and grades_avr['all_avr'] < 6 %} text-warning {% else %} text-success {% endif %}"
-        >
+</head>
+<body>
+    <div class="container">
+      <div class="header">
+        <h1>CVV Average Calculator</h1>
+        <p>Server-Side Grade Average Calculations</p>
+      </div>
+
+      <a href="/" class="logout-btn">Logout</a>
+
+      <div class="card">
+        <h2>Your Grade Averages</h2>
+        <div class="overall-average text-{% if grades_avr['all_avr'] < 5 %}danger{% elif grades_avr['all_avr'] >= 5 and grades_avr['all_avr'] < 6 %}warning{% else %}success{% endif %}">
           {{ grades_avr["all_avr"] | round(1) }}
-        </p>
-      </h1>
-      <div class="table-responsive">
+        </div>
+      </div>
+
+      <div id="gradesContent">
         {% for period, subjects in grades_avr.items() if period != 'all_avr' %}
-        <h2 class="text-center my-4">
-          Period {{ period }}
-          <p
-            class="fw-bold {% if grades_avr[period]['period_avr'] < 5 %} text-danger {% elif grades_avr[period]['period_avr'] >= 5 and grades_avr[period]['period_avr'] < 6 %} text-warning {% else %} text-success {% endif %}"
-          >
-            {{ grades_avr[period]['period_avr'] | round(1) }}
-          </p>
-        </h2>
-        <table class="table table-bordered align-middle">
-          <thead class="table-light">
-            <tr>
-              <th scope="col">Subject</th>
-              <th scope="col">Grades</th>
-              <th scope="col" class="text-center">Average</th>
-            </tr>
-          </thead>
-          <tbody class="table-group-divider">
-            {% for subject, data in subjects.items() %} {% if subject !=
-            'period_avr' %}
-            <tr
-              class="{% if data.avr < 5 %} table-danger {% elif data.avr >= 5 and data.avr < 6 %} table-warning {% else %} table-success {% endif %}"
-            >
-              <td class="fw-bold">{{ subject }}</td>
-              <td>
-                {% for grade in data.grades %}
-                <button
-                  type="button"
-                  class="btn {% if grade.decimalValue < 5 %} btn-danger {% elif grade.decimalValue >= 5 and grade.decimalValue < 6 %} btn-warning {% else %} btn-success {% endif %} btn-sm mb-1"
-                  data-bs-toggle="modal"
-                  data-bs-target="#gradeModal"
-                  data-grade='{
-                    "decimalValue": "{{ grade.decimalValue }}",
-                    "evtDate": "{{ grade.evtDate }}",
-                    "notesForFamily": "{{ grade.notesForFamily }}",
-                    "componentDesc": "{{ grade.componentDesc }}",
-                    "teacherName": "{{ grade.teacherName }}"
-                  }'
-                >
-                  {{ grade.decimalValue }}
-                </button>
-                {% endfor %}
-              </td>
-              <td class="fw-bold text-center">
-                <div class="d-flex gap-2 justify-content-center flex-wrap">
-                  <span
-                    class="badge bg-{% if data.avr < 5 %}danger{% elif data.avr >= 5 and data.avr < 6 %}warning text-dark{% else %}success{% endif %} fs-6 py-2 px-3"
-                  >
-                    {{ (data.avr) | round(1) }}
-                  </span>
-                  {% if data.needed_for_6 is not none %}
-                  <span class="badge bg-info fs-6 py-2 px-3">
-                    Need: {{ data.needed_for_6 | round(1) }}
-                  </span>
-                  {% endif %}
-                </div>
-              </td>
-            </tr>
-            {% endif %} {% endfor %}
-          </tbody>
-        </table>
+        <div class="period-section">
+          <div class="period-title">Period {{ period }}</div>
+          <div class="period-average text-{% if subjects['period_avr'] < 5 %}danger{% elif subjects['period_avr'] >= 5 and subjects['period_avr'] < 6 %}warning{% else %}success{% endif %}">
+            {{ subjects['period_avr'] | round(1) }}
+          </div>
+
+          {% for subject, data in subjects.items() if subject != 'period_avr' %}
+          <div class="subject-row">
+            <div class="subject-name">{{ subject }}</div>
+            <div class="grades">
+              {% for grade in data.grades %}
+              <button
+                class="grade-badge bg-{% if grade.decimalValue < 5 %}danger{% elif grade.decimalValue >= 5 and grade.decimalValue < 6 %}warning{% else %}success{% endif %}"
+                onclick="showGradeModal('{{ grade.decimalValue }}', '{{ grade.evtDate }}', '{{ grade.componentDesc }}', '{{ grade.teacherName }}', '{{ grade.notesForFamily }}')"
+              >
+                {{ grade.decimalValue }}
+              </button>
+              {% endfor %}
+            </div>
+            <div class="average-container">
+              <div class="subject-average bg-{% if data.avr < 5 %}danger{% elif data.avr >= 5 and data.avr < 6 %}warning{% else %}success{% endif %}">
+                {{ data.avr | round(1) }}
+              </div>
+              {% if data.needed_for_6 is not none %}
+              <div class="needed-grade">
+                Need: {{ data.needed_for_6 | round(1) }}
+              </div>
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
         {% endfor %}
       </div>
     </div>
 
     <!-- Grade Details Modal -->
-    <div
-      class="modal fade"
-      id="gradeModal"
-      tabindex="-1"
-      aria-labelledby="gradeModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="gradeModalLabel">Grade Details</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <p><strong>Grade:</strong> <span id="modalGrade"></span></p>
-            <p><strong>Date:</strong> <span id="modalDate"></span></p>
-            <p><strong>Component:</strong> <span id="modalComponent"></span></p>
-            <p><strong>Teacher:</strong> <span id="modalTeacher"></span></p>
-            <p><strong>Notes:</strong> <span id="modalNotes"></span></p>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-          </div>
+    <div id="gradeModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">Grade Details</h3>
+          <button class="close-btn" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Grade:</strong> <span id="modalGrade"></span></p>
+          <p><strong>Date:</strong> <span id="modalDate"></span></p>
+          <p><strong>Component:</strong> <span id="modalComponent"></span></p>
+          <p><strong>Teacher:</strong> <span id="modalTeacher"></span></p>
+          <p><strong>Notes:</strong> <span id="modalNotes"></span></p>
         </div>
       </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-      // JavaScript to populate modal with grade details
-      const gradeModal = document.getElementById("gradeModal");
-      gradeModal.addEventListener("show.bs.modal", (event) => {
-        const button = event.relatedTarget;
-        const gradeData = JSON.parse(button.getAttribute("data-grade"));
-        document.getElementById("modalGrade").textContent =
-          gradeData.decimalValue;
-        document.getElementById("modalDate").textContent = gradeData.evtDate;
-        document.getElementById("modalComponent").textContent =
-          gradeData.componentDesc;
-        document.getElementById("modalTeacher").textContent =
-          gradeData.teacherName;
-        document.getElementById("modalNotes").textContent =
-          gradeData.notesForFamily || "No notes";
+      function showGradeModal(grade, date, component, teacher, notes) {
+        document.getElementById("modalGrade").textContent = grade;
+        document.getElementById("modalDate").textContent = date;
+        document.getElementById("modalComponent").textContent = component;
+        document.getElementById("modalTeacher").textContent = teacher;
+        document.getElementById("modalNotes").textContent = notes || "No notes";
+        document.getElementById("gradeModal").classList.add("show");
+      }
+
+      function closeModal() {
+        document.getElementById("gradeModal").classList.remove("show");
+      }
+
+      // Close modal when clicking outside
+      document.addEventListener("click", (e) => {
+        const modal = document.getElementById("gradeModal");
+        if (e.target === modal) {
+          closeModal();
+        }
       });
     </script>
-  </body>
+</body>
 </html>

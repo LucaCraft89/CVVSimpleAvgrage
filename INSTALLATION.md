@@ -1,11 +1,13 @@
 # CVV Average Calculator Extension - Installation Guide
 
 ## 📦 Extension Package
+
 The extension is available in `cvv-extension.tar.gz`
 
 ## 🌐 Chrome/Chromium Installation (Desktop & Mobile)
 
 ### Desktop Chrome:
+
 1. Open Chrome and go to `chrome://extensions/`
 2. Enable **Developer mode** (toggle in top right)
 3. Click **Load unpacked**
@@ -13,7 +15,9 @@ The extension is available in `cvv-extension.tar.gz`
 5. The extension is now installed!
 
 ### Chrome Android (Kiwi Browser):
+
 Chrome for Android doesn't support extensions, but **Kiwi Browser** does:
+
 1. Install **Kiwi Browser** from Google Play Store
 2. Open Kiwi Browser and go to `chrome://extensions/`
 3. Enable **Developer mode**
@@ -26,6 +30,7 @@ Chrome for Android doesn't support extensions, but **Kiwi Browser** does:
 ## 🦊 Firefox Installation
 
 ### Desktop Firefox:
+
 1. Open Firefox and go to `about:debugging#/runtime/this-firefox`
 2. Click **Load Temporary Add-on**
 3. Navigate to the `browser-extension` folder
@@ -33,13 +38,16 @@ Chrome for Android doesn't support extensions, but **Kiwi Browser** does:
 5. Extension is loaded! (Note: temporary - will be removed when Firefox restarts)
 
 #### For Permanent Firefox Installation:
+
 You need to sign the extension with Mozilla:
+
 1. Create an account at https://addons.mozilla.org/
 2. Go to https://addons.mozilla.org/developers/
 3. Submit your extension for signing
 4. Once signed, you can install it permanently
 
 ### Firefox Android:
+
 1. Install **Firefox Nightly** from Google Play Store (regular Firefox doesn't support custom extensions)
 2. Create a collection on https://addons.mozilla.org/ (requires account)
 3. Follow Mozilla's guide for custom extension collections: https://blog.mozilla.org/addons/2020/09/29/expanded-extension-support-in-firefox-for-android-nightly/
@@ -49,6 +57,7 @@ You need to sign the extension with Mozilla:
 ## 📱 Recommended for Mobile: Kiwi Browser
 
 For the best mobile experience, we recommend **Kiwi Browser** on Android:
+
 - Full Chrome extension support
 - Easy to install unpacked extensions
 - Works exactly like desktop Chrome
@@ -75,15 +84,18 @@ For the best mobile experience, we recommend **Kiwi Browser** on Android:
 ## 🆘 Troubleshooting
 
 ### Extension doesn't load:
+
 - Make sure all files are present in the folder
 - Check browser console for errors (F12 → Console)
 
 ### Login fails:
+
 - Verify your credentials are correct
 - Check your internet connection
 - Make sure the ClasseViva API is accessible
 
 ### Grades don't display:
+
 - Check browser console for errors
 - Try logging out and back in
 - Reload the extension

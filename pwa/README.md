@@ -1,6 +1,7 @@
 # CVV Average Calculator - Progressive Web App (PWA)
 
 ## 🌍 **Works on ALL Platforms!**
+
 ✅ Android (Chrome, Samsung Internet, Firefox)
 ✅ iOS (Safari)
 ✅ Desktop (Chrome, Edge, Firefox)
@@ -11,6 +12,7 @@
 ## 📦 What's a PWA?
 
 A Progressive Web App is a website that **acts like a native app**:
+
 - Install to home screen with an icon
 - Works offline
 - Full-screen experience (no browser UI)
@@ -24,6 +26,7 @@ A Progressive Web App is a website that **acts like a native app**:
 ### Option 1: GitHub Pages (Recommended - Free & Easy)
 
 1. **Push to GitHub**:
+
    ```bash
    cd /home/luca/CVVSimpleAvgrage
    git add pwa/
@@ -32,6 +35,7 @@ A Progressive Web App is a website that **acts like a native app**:
    ```
 
 2. **Enable GitHub Pages**:
+
    - Go to your repo: https://github.com/LucaCraft89/CVVSimpleAvgrage
    - Settings → Pages
    - Source: Deploy from branch `main`
@@ -45,11 +49,13 @@ A Progressive Web App is a website that **acts like a native app**:
 ### Option 2: Vercel (Alternative - Also Free)
 
 1. Install Vercel CLI:
+
    ```bash
    npm install -g vercel
    ```
 
 2. Deploy:
+
    ```bash
    cd /home/luca/CVVSimpleAvgrage/pwa
    vercel --prod
@@ -71,8 +77,8 @@ A Progressive Web App is a website that **acts like a native app**:
 
 1. **Open in Chrome/Firefox**:
    - Visit your deployed URL
-   
 2. **Install Prompt**:
+
    - Chrome shows "Add to Home Screen" banner automatically
    - Or tap ⋮ menu → "Add to Home Screen" or "Install app"
 
@@ -84,8 +90,8 @@ A Progressive Web App is a website that **acts like a native app**:
 
 1. **Open in Safari**:
    - Visit your deployed URL
-   
 2. **Add to Home Screen**:
+
    - Tap Share button (□↑)
    - Scroll down → "Add to Home Screen"
    - Tap "Add"
@@ -98,8 +104,8 @@ A Progressive Web App is a website that **acts like a native app**:
 
 1. **Open in Chrome/Edge**:
    - Visit your deployed URL
-   
 2. **Install**:
+
    - Click install icon (⊕) in address bar
    - Or click ⋮ menu → "Install CVV Average Calculator"
 
@@ -157,24 +163,26 @@ npx serve
 
 ## ✅ What Works vs Extension
 
-| Feature | Browser Extension | PWA |
-|---------|------------------|-----|
-| Install | Dev mode / Store | Add to home screen |
-| Offline | ✅ Yes | ✅ Yes |
-| CORS | ✅ Full control | ⚠️ Limited* |
-| User-Agent header | ✅ Custom | ⚠️ Limited* |
-| Works on iOS | Safari only | ✅ Yes |
-| Works on Android | Kiwi/Firefox | ✅ All browsers |
-| Desktop | ✅ Yes | ✅ Yes |
+| Feature           | Browser Extension | PWA                |
+| ----------------- | ----------------- | ------------------ |
+| Install           | Dev mode / Store  | Add to home screen |
+| Offline           | ✅ Yes            | ✅ Yes             |
+| CORS              | ✅ Full control   | ⚠️ Limited\*       |
+| User-Agent header | ✅ Custom         | ⚠️ Limited\*       |
+| Works on iOS      | Safari only       | ✅ Yes             |
+| Works on Android  | Kiwi/Firefox      | ✅ All browsers    |
+| Desktop           | ✅ Yes            | ✅ Yes             |
 
-*Note: PWA has the same CORS/header limitations as a regular website, but the app still works because the API allows cross-origin requests.
+\*Note: PWA has the same CORS/header limitations as a regular website, but the app still works because the API allows cross-origin requests.
 
 ---
 
 ## 🎨 Customization
 
 ### Change App Name:
+
 Edit `pwa/manifest.json`:
+
 ```json
 {
   "name": "Your App Name",
@@ -183,7 +191,9 @@ Edit `pwa/manifest.json`:
 ```
 
 ### Change Colors:
+
 Edit `pwa/manifest.json`:
+
 ```json
 {
   "background_color": "#667eea",
@@ -192,6 +202,7 @@ Edit `pwa/manifest.json`:
 ```
 
 ### Change Icon:
+
 Replace `icon-192.png` and `icon-512.png` with your own images.
 
 ---
@@ -199,15 +210,18 @@ Replace `icon-192.png` and `icon-512.png` with your own images.
 ## 🆘 Troubleshooting
 
 ### Install prompt doesn't appear:
+
 - PWA must be served over HTTPS
 - Service worker must register successfully
 - Check browser console for errors
 
 ### "Add to Home Screen" not showing (iOS):
+
 - Must use Safari browser
 - Look in Share menu (not browser menu)
 
 ### App doesn't work offline:
+
 - Service worker must install first (check console)
 - Visit all pages once while online
 - Check `service-worker.js` is accessible
